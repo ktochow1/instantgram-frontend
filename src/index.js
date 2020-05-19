@@ -1,10 +1,14 @@
 const endpoint = "http://localhost:3000/api/v1/posts"
 
 document.addEventListener("DOMContentLoaded", () => {
-  getPosts()
+  getPosts();
   const createPostForm = document.querySelector('#post-form');
   createPostForm.addEventListener("submit", (e) => {
     createFormHandler(e)
+  let editBtn = document.querySelector("#edit-button");
+  editBtn.addEventListener("click", event => {
+    console.log('click');
+  })
 })
 })
 
@@ -18,11 +22,10 @@ function getPosts(){
         <img src=${post.attributes.image_url} height="200" width="250"><br>
         <button id="edit-button" data-id=${post.id}>Edit</button><br>
         </div>`;
-
         document.querySelector('#post-container').innerHTML += markup
-    })
-  })
-}
+    });
+  });
+};
 
 function createFormHandler(e){
   e.preventDefault();
@@ -32,16 +35,27 @@ function createFormHandler(e){
   // const submit = document.querySelector("#submit-button");
 }
 
-function postFetch(title, url){
-  let bodyData = {title, url}
+function postFetch(title, image_url){
+  const bodyData = {title, image_url}
   fetch(endpoint, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(bodyData)//how i'm going to SEND data to API
+    headers: {
+      "Content-Type": "application/json", //explicit about content type
+      "Accept": "application/json"
+  },
+    body: JSON.stringify(bodyData)
   })
   .then(response => response.json())
   .then(post => {
-    console.log(post);
+    // console.log(post);
+    const postData = post.data.attributes
+    const postMarkup = `
+    <div data-id=${post.id}>
+    <h3>${postData.title}</h3>
+    <img src=${postData.image_url} height="200" width="250">
+    <button data-id=${postData.id}>Edit</button>
+    </div>`;
+    document.querySelector("#post-container").innerHTML += postMarkup;
   })
 
 }
