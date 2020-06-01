@@ -25,14 +25,34 @@ function getPosts(){
       //   <img src=${post.image_url} height="200" width="250"><br>
       //   </div>`;
       let postContainer = document.querySelector("#post-container");
-      postContainer.setAttribute("data-id", `${post.id}`);
+      let divContainer = document.createElement("div");
+      divContainer.setAttribute("data-id", `${post.id}`);
 
       let h3 = document.createElement("h3");
       let h3Text = document.createTextNode(`${post.title}`)
+      let img = document.createElement("img");
+      img.setAttribute("src", `${post.image_url}`)
+      img.setAttribute("height", "350");
+      img.setAttribute("width", "250");
+
+      let editBtn = document.createElement("button");
+      let btnTxt = document.createTextNode("Edit");
+
+
+
+      postContainer.appendChild(divContainer)
+      divContainer.appendChild(h3)
       h3.appendChild(h3Text)
-      // h3.value = post.title;
-      postContainer.appendChild(h3)
-      let node = document.createTextNode(`${post.title}`)
+      divContainer.appendChild(img)
+      divContainer.appendChild(editBtn)
+      editBtn.appendChild(btnTxt)
+
+      editBtn.addEventListener("click", function(){
+        console.log("click")
+      })
+
+
+      // let node = document.createTextNode(`${post.title}`)
       // div.append(node)
 
 
