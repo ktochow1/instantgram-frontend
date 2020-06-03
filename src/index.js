@@ -42,7 +42,6 @@ function getPosts(){
       const postDiv = document.querySelector("#post-container");
       postDiv.setAttribute("data-id", `${post.id}`)
 
-
       const patchForm = document.createElement("FORM");
       patchForm.setAttribute("id", "patch-form");
       patchForm.setAttribute("data-id", `${post.id}`);
@@ -66,16 +65,27 @@ function getPosts(){
 
       const editSubmit = document.createElement("INPUT");
       editSubmit.setAttribute("type", "submit");
-      editSubmit.setAttribute("data-id", `${post.id}`)
+      editSubmit.setAttribute("data-id", `${post.id}`);
+
+
 
       editBtn.addEventListener("click", function(){
-        divContainer.childNodes.forEach(function(){
-          postDiv.appendChild(patchForm);
-          patchForm.appendChild(editTitle);
-          patchForm.appendChild(editUrl);
-          patchForm.appendChild(editSubmit);
+        button = document.querySelectorAll("button")
+          button.forEach(function(b){
+            console.log(b)
+            if(b.id === post.id){
+              console.log(b.id)
+            postDiv.appendChild(patchForm);
+            b.appendChild(patchForm)
+            patchForm.appendChild(editTitle);
+            patchForm.appendChild(editUrl);
+            patchForm.appendChild(editSubmit);
+          }
 
-            })
+          })
+
+
+
 
           })
 
