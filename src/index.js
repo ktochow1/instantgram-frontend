@@ -72,7 +72,7 @@ function getPosts(){
       editBtn.addEventListener("click", function(){
         button = document.querySelectorAll("button")
           button.forEach(function(b){
-            console.log(b)
+            // console.log(b)
             if(b.id === post.id){
               console.log(b.id)
             postDiv.appendChild(patchForm);
@@ -81,13 +81,8 @@ function getPosts(){
             patchForm.appendChild(editUrl);
             patchForm.appendChild(editSubmit);
           }
-
-          })
-
-
-
-
-          })
+        })
+      })
 
 
 
