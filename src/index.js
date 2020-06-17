@@ -98,26 +98,10 @@ function getPosts(){
           body: JSON.stringify(bodyData),
         }).then(response => response.json())
         .then(data =>  {
-          // console.log(data)
-          console.log(data)
-          let containerId = document.querySelector("#div-container");
-          // containerId.id = document.querySelectorAll(`[data-id=${post.id}]`)
-          containerId
-          // let id = containerId.getAttribute("data-id")
-          // console.log(containerId)
-          // console.log(this.attr("data-id"))
-          //bodyData = undefined
-          //post = Correct post object
-          // console.log(post.id)
-          let container = document.querySelector("#div-container");
-          container.setAttribute("data-id", `${post.id}`);
-          container.title = editTitle
-          let divContainer = document.querySelector("#div-container");
-          // console.log(container)
-          // divContainer.find((id) => {console.log(id)})
-          // console.log(container.dataset)
-          // console.log(this)
-          // console.log(post.id)
+          let currentContainer =  document.querySelector(`[data-id='${data.data.id}']`)
+          currentContainer.firstChild.innerHTML = data.data.attributes.title
+          currentContainer.children[1].attributes[1].value = data.data.attributes.image_url
+
         }
       )
       }
@@ -133,9 +117,11 @@ function getPosts(){
         // editSubmit.setAttribute("type", "submit");
         // editSubmit.setAttribute("data-id", `${post.id}`);
         patchForm.appendChild(editSubmit);
-
         patchForm.addEventListener("submit", (e) => {
           editFormHandler(e)
+
+          //reset the input boxes after submit
+
         })
         function editFormHandler(e){
           e.preventDefault();
@@ -145,11 +131,9 @@ function getPosts(){
           patchFetch(title, image_url);
         }
 
-        // deleteBtn.addEventListener("click", (e) => {
-        //   console.log(post)
-        //
-        //   // deleteFormHandler(e);
-        // })
+        deleteBtn.addEventListener("click", (e) => {
+          deleteFormHandler(e);
+        })
       function deleteFormHandler(e){
         // console.log(e.explicitOriginalTarget.attributes[0].nodeValue)
         const deleteBtn = document.querySelector("#deleteBtn")
@@ -159,14 +143,18 @@ function getPosts(){
       }
       function deleteFetch(title, image_url){
         const bodyData = {title, image_url}
-        fetch(`http://localhost:3000/api/v1/posts${post.id}`, {
+        fetch(`http://localhost:3000/api/v1/posts/${post.id}`, {
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json"
           },
           method: "DELETE"
         }).then(response => response.json())
-        .then(json => console.log(json))
+        .then(data => {
+          console.log(data)
+          let post = document.querySelector(`[data-id='${data.data.id}']`);
+          
+        })
       }
     })
 
