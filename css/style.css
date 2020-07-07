@@ -9,6 +9,7 @@ img {
   length: 30%;
 }
 
+
 /* #post-pics {
   display: block;
   margin-left: auto;
@@ -76,9 +77,11 @@ h3 {
 #edit-button {
   display: block;
   text-align: center;
-  
 }
 
+#buttons {
+  
+}
 
 body {
   background: rgba(247, 227, 161, .2);
