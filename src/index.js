@@ -1,6 +1,5 @@
 const endpoint = "http://localhost:3000/api/v1/posts"
 
-// *likes aren't saved when page reloads
 
   document.addEventListener("DOMContentLoaded", () => {
     getPosts();
@@ -12,6 +11,7 @@ const endpoint = "http://localhost:3000/api/v1/posts"
   .then(posts => {
     posts.data.forEach(postData => {
       let post = new Post(postData)
+
       let likeBtn = post.postContainer.children[3]
 
       likeBtn.addEventListener("click", function(e){
@@ -69,17 +69,18 @@ const endpoint = "http://localhost:3000/api/v1/posts"
         // this.location.reload()
       }
 
-      // function createFormHandler(e){
-      //   e.preventDefault();
-      //   const title = document.querySelector("#input-title").value;
-      //   const image_url = document.querySelector("#input-url").value;
-      //   // console.log(formTitle)
-      //   postFetch(title, image_url);
-      //   form.reset();
-      // }
-      // createPostForm.addEventListener("submit", (e) => {
-      //   createFormHandler(e);
-      // })
+      function createFormHandler(e){
+        e.preventDefault();
+        const title = document.querySelector("#input-title").value;
+        const image_url = document.querySelector("#input-url").value;
+        // console.log(formTitle)
+        postFetch(title, image_url);
+        createPostForm.reset();
+      }
+      let createPostForm = document.querySelector("#post-form")
+      createPostForm.addEventListener("submit", (e) => {
+        createFormHandler(e);
+      })
 
       function deleteFormHandler(e){
           // console.log(e.explicitOriginalTarget.attributes[0].nodeValue)
@@ -106,67 +107,67 @@ const endpoint = "http://localhost:3000/api/v1/posts"
       // })
 
     })})}
-//     postFetch(title, image_url){
-//       console.log(this)
-//           const bodyData = {title, image_url}
-//           console.log(bodyData)
-//           fetch(endpoint, {
-//             method: "POST",
-//             headers: {
-//               "Content-Type": "application/json", //explicit about content type
-//               "Accept": "application/json"
-//           },
-//             body: JSON.stringify(bodyData)
-//           })
-//           .then(response => response.json())
-//           .then(bodyData => {
-//             console.log(bodyData)
-//             let current_post = document.querySelector(`[data-id='${bodyData.data.id}']`)
-//             let div = document.querySelector("#div-container");
-//             let postC = document.createElement("div");
-//             postC.setAttribute("id", "post-container");
-//             postC.setAttribute("data-id", `${bodyData.id}`);
-//
-//             let pTitle = document.createElement("h3");
-//             let h3Text = document.createTextNode(`${bodyData.title}`)
-//             let img = document.createElement("img");
-//             img.setAttribute("src", `${bodyData.image_url}`)
-//             img.setAttribute("height", "350");
-//             img.setAttribute("width", "250");
-//
-//             let eBtn = document.createElement("button");
-//             let ebtnTxt = document.createTextNode("Edit");
-//             let lBtn = document.createElement("button");
-//             let lTxt = document.createTextNode(`♡ ${0}`)
-//             let dBtn = document.createElement("button");
-//             let dTxt = document.createTextNode("Delete");
-//
-//             let comments = document.createElement("div");
-//             comments.setAttribute("id", "comments");
-//             let commentForm = document.createElement("FORM");
-//             commentForm.setAttribute("id", "comment-form");
-//             let comTxtArea = document.createElement("INPUT");
-//             comTxtArea.setAttribute("type", "textarea");
-//             comTxtArea.setAttribute("placeholder", "write your comment here")
-//             let comSub = document.createElement("INPUT");
-//             comSub.setAttribute("type", "submit")
-//             comSub.setAttribute("value", "Submit")
-//
-//             div.appendChild(postC)
-//             postC.appendChild(pTitle)
-//             pTitle.appendChild(h3Text)
-//             postC.appendChild(img)
-//             postC.appendChild(eBtn)
-//             eBtn.appendChild(ebtnTxt)
-//             postC.appendChild(lBtn)
-//             lBtn.appendChild(lTxt)
-//             postC.appendChild(dBtn)
-//             dBtn.appendChild(dTxt)
-//             postC.appendChild(comments);
-//             comments.appendChild(commentForm);
-//             commentForm.appendChild(comTxtArea);
-//             commentForm.appendChild(comSub);
-// )}
+    function postFetch(title, image_url){
+          const bodyData = {title, image_url}
+          fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json", //explicit about content type
+              "Accept": "application/json"
+          },
+            body: JSON.stringify(bodyData)
+          })
+          .then(response => response.json())
+          .then(bodyData => {
+            console.log(bodyData)
+            // bodyData.data.attributes.like = 0
+            let current_post = document.querySelector(`[data-id='${bodyData.data.id}']`)
+            let div = document.querySelector("#div-container");
+            let postC = document.createElement("div");
+            postC.setAttribute("id", "post-container");
+            postC.setAttribute("data-id", `${bodyData.id}`);
+
+            let pTitle = document.createElement("h3");
+            let h3Text = document.createTextNode(`${bodyData.title}`)
+            let img = document.createElement("img");
+            img.setAttribute("src", `${bodyData.image_url}`)
+            img.setAttribute("height", "350");
+            img.setAttribute("width", "250");
+
+            let eBtn = document.createElement("button");
+            let ebtnTxt = document.createTextNode("Edit");
+            let lBtn = document.createElement("button");
+            let lTxt = document.createTextNode(`♡ ${0}`);
+            // lTxt.setAttribute("value", `♡ ${0}`)
+            let dBtn = document.createElement("button");
+            let dTxt = document.createTextNode("Delete");
+
+            let comments = document.createElement("div");
+            comments.setAttribute("id", "comments");
+            let commentForm = document.createElement("FORM");
+            commentForm.setAttribute("id", "comment-form");
+            let comTxtArea = document.createElement("INPUT");
+            comTxtArea.setAttribute("type", "textarea");
+            comTxtArea.setAttribute("placeholder", "write your comment here")
+            let comSub = document.createElement("INPUT");
+            comSub.setAttribute("type", "submit")
+            comSub.setAttribute("value", "Submit")
+
+            div.appendChild(postC)
+            postC.appendChild(pTitle)
+            pTitle.appendChild(h3Text)
+            postC.appendChild(img)
+            postC.appendChild(eBtn)
+            eBtn.appendChild(ebtnTxt)
+            postC.appendChild(lBtn)
+            lBtn.appendChild(lTxt)
+            postC.appendChild(dBtn)
+            dBtn.appendChild(dTxt)
+            postC.appendChild(comments);
+            comments.appendChild(commentForm);
+            commentForm.appendChild(comTxtArea);
+            commentForm.appendChild(comSub);
+})}
 
 
 
@@ -184,7 +185,7 @@ class Comment {
 
 class Post {
   constructor(attributes){
-
+    console.log(attributes)
     this.id = attributes.id
     this.postContainer = document.createElement("div");
     this.postContainer.setAttribute("data-id", `${this.id}`);
@@ -193,12 +194,13 @@ class Post {
       <h3 class='post-title'>${attributes.attributes.title}</h3>
       <img id='imgUrl' src='${attributes.attributes.image_url}' width='250' height='350'>
       <button  class='edit-buttons' id='edit-button'>Edit</button>
-      <button class='like-buttons' id='like-button' like-data-id='${this.id}'>♡ 0</button>
+      <button class='like-buttons' id='like-button' like-data-id='${this.id}'>♡ ${attributes.attributes.like.counter}</button>
       <button id='deleteBtn' class='buttons' data-id='${attributes.id}'>Delete</button>
       <div id='comments'><form data-id='${attributes.id}' id='comment-form'>
       <input type='textarea' placeholder='write your comment here'><input id='comment-submit' type='submit' value='Submit'></form>
       </div>
       `
+      // console.log(this)
     this.postContainer.children[2].addEventListener("click", function(e){
         const patchForm = document.createElement("FORM");
         const editTitle = document.createElement("INPUT");
